@@ -154,14 +154,14 @@ namespace Threax.AspNetCore.CSP
             {
                 foreach (var item in Policies)
                 {
-                    sb.Append("; ");
                     sb.Append(item.Key);
                     sb.Append(" ");
                     sb.Append(item.Value);
+                    sb.Append("; ");
                 }
             }
 
-            return new CSPString(sb.ToString());
+            return new CSPString(sb.ToString(0, sb.Length > 0 ? sb.Length - 2 : 0));
         }
     }
 }
