@@ -9,15 +9,20 @@ namespace Threax.AspNetCore.CSP
     /// </summary>
     public class CSPOptions
     {
+        public Dictionary<String, PolicyItem> Policies { get; set; } = new Dictionary<string, PolicyItem>();
+
         /// <summary>
         /// The HTTP Content-Security-Policy (CSP) default-src directive serves as a fallback for the other CSP fetch directives. 
         /// For each of the following directives that are absent, the user agent will look for the default-src directive and will use this value for it.
         /// Other policies are added with AddXSrc or by adding them manually to the dictionary.
         /// CSP Version 1.
         /// </summary>
-        public PolicyItem Default { get; set; } = new PolicyItem();
-
-        public Dictionary<String, PolicyItem> Policies { get; set; } = new Dictionary<string, PolicyItem>();
+        public PolicyItem AddDefault()
+        {
+            var item = new PolicyItem();
+            Policies.Add("default-src", item);
+            return item;
+        }
 
         /// <summary>
         /// Restricts what can be loaded using script interfaces. The APIs that are restricted are: <a> ping, Fetch, XMLHttpRequest, WebSocket, and EventSource.
@@ -144,11 +149,7 @@ namespace Threax.AspNetCore.CSP
         public CSPString Build()
         {
             var sb = new StringBuilder();
-            //Write default
-            sb.Append("default-src ");
-            sb.Append(Default);
 
-            //Write other policies
             if (Policies != null)
             {
                 foreach (var item in Policies)

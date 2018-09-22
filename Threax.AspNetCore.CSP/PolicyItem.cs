@@ -13,34 +13,42 @@ namespace Threax.AspNetCore.CSP
         }
 
         /// <summary>
-        /// Set this to true to include 'self' in this policy. This will allow
-        /// connections back to the site that served the content. Default: true.
+        /// Call this to include 'self' in this policy. This will allow
+        /// connections back to the site that served the content.
         /// </summary>
-        public bool IncludeSelf { get; set; } = true;
-
-        /// <summary>
-        /// Set this to true to include 'self' in this policy. This will allow
-        /// connections back to the site that served the content. Default: true.
-        /// </summary>
-        public PolicyItem SetIncludeSelf(bool value)
+        public PolicyItem AddSelf()
         {
-            this.IncludeSelf = value;
+            this.Entries.Add("'self'");
             return this;
         }
 
         /// <summary>
-        /// Set this to true to include 'unsafe-inline' in the policy. This allows
-        /// inline elements on the page for this policy type. Default: false.
+        /// Add 'none'. This makes no urls match.
         /// </summary>
-        public bool IncludeUnsafeInline { get; set; } = false;
+        /// <returns></returns>
+        public PolicyItem AddNone()
+        {
+            this.Entries.Add("'none'");
+            return this;
+        }
 
         /// <summary>
-        /// Set this to true to include 'unsafe-inline' in the policy. This allows
-        /// inline elements on the page for this policy type. Default: false.
+        /// Call this to include 'unsafe-inline' in the policy. This allows
+        /// inline elements on the page for this policy type.
         /// </summary>
-        public PolicyItem SetIncludeUnsafeInline(bool value)
+        public PolicyItem AddUnsafeInline()
         {
-            this.IncludeUnsafeInline = value;
+            this.Entries.Add("'unsafe-inline'");
+            return this;
+        }
+
+        /// <summary>
+        /// Call this to include 'unsafe-eval' in the policy. This allows
+        /// eval statements to run.
+        /// </summary>
+        public PolicyItem AddUnsafeEval()
+        {
+            this.Entries.Add("'unsafe-eval'");
             return this;
         }
 
@@ -48,15 +56,15 @@ namespace Threax.AspNetCore.CSP
         /// Any additional entries you want to include, this can be any supported
         /// value.
         /// </summary>
-        public List<String> Entries { get; set; }
+        public List<String> Entries { get; set; } = new List<string>();
 
         /// <summary>
         /// Any additional entries you want to include, this can be any supported
-        /// value.
+        /// value. This will append the entries to whatever you have added so far.
         /// </summary>
-        public PolicyItem SetEntries(IEnumerable<String> value)
+        public PolicyItem AddEntries(IEnumerable<String> value)
         {
-            this.Entries = value.ToList();
+            this.Entries.AddRange(value);
             return this;
         }
 
@@ -65,19 +73,12 @@ namespace Threax.AspNetCore.CSP
         /// you can specify inline styles if you don't want it to be unlimited by setting
         /// IncludeUnsafeInline to true. Default: null.
         /// </summary>
-        //public List<String> InlineStyles { get; set; }
+        //public PolicyItem AddInlineStyles (Not Implemented)
 
         public override sealed string ToString()
         {
             var sb = new StringBuilder(1024);
-            if (IncludeSelf)
-            {
-                sb.Append("'self' ");
-            }
-            if (IncludeUnsafeInline)
-            {
-                sb.Append("'unsafe-inline' ");
-            }
+
             if(Entries != null)
             {
                 foreach(var entry in Entries)
@@ -86,8 +87,6 @@ namespace Threax.AspNetCore.CSP
                     sb.Append(" ");
                 }
             }
-
-            //Hash inline here
 
             return sb.ToString(0, sb.Length > 0 ? sb.Length - 1 : 0);
         }
