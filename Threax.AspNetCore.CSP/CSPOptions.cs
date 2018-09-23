@@ -25,7 +25,7 @@ namespace Threax.AspNetCore.CSP
         }
 
         /// <summary>
-        /// Restricts what can be loaded using script interfaces. The APIs that are restricted are: <a> ping, Fetch, XMLHttpRequest, WebSocket, and EventSource.
+        /// Restricts what can be loaded using script interfaces. The APIs that are restricted are: a ping, Fetch, XMLHttpRequest, WebSocket, and EventSource.
         /// CSP Version 1.
         /// </summary>
         public PolicyItem AddConnect()
@@ -47,7 +47,7 @@ namespace Threax.AspNetCore.CSP
         }
 
         /// <summary>
-        /// The HTTP Content-Security-Policy (CSP) frame-src directive specifies valid sources for nested browsing contexts loading using elements such as <frame> and <iframe>.
+        /// The HTTP Content-Security-Policy (CSP) frame-src directive specifies valid sources for nested browsing contexts loading using elements such as frame and iframe.
         /// CSP Version 1.
         /// </summary>
         public PolicyItem AddFrame()
@@ -80,7 +80,7 @@ namespace Threax.AspNetCore.CSP
         }
 
         /// <summary>
-        /// The HTTP Content-Security-Policy (CSP) media-src directive specifies valid sources for loading media using the <audio> and <video> elements.
+        /// The HTTP Content-Security-Policy (CSP) media-src directive specifies valid sources for loading media using the audio and video elements.
         /// CSP Version 1.
         /// </summary>
         public PolicyItem AddMedia()
@@ -91,8 +91,8 @@ namespace Threax.AspNetCore.CSP
         }
 
         /// <summary>
-        /// The HTTP Content-Security-Policy object-src directive specifies valid sources for the <object>, <embed>, and <applet> elements. 
-        /// To set allowed types for <object>, <embed>, and<applet> elements, use the plugin-types directive.
+        /// The HTTP Content-Security-Policy object-src directive specifies valid sources for the object, embed, and applet elements. 
+        /// To set allowed types for object, embed, and applet elements, use the plugin-types directive.
         /// CSP Version 1.
         /// </summary>
         public PolicyItem AddObject()
@@ -104,7 +104,7 @@ namespace Threax.AspNetCore.CSP
 
         /// <summary>
         /// The HTTP Content-Security-Policy (CSP) script-src directive specifies valid sources for JavaScript. 
-        /// This includes not only URLs loaded directly into <script> elements, but also things like inline script 
+        /// This includes not only URLs loaded directly into script elements, but also things like inline script 
         /// event handlers (onclick) and XSLT stylesheets which can trigger script execution.
         /// CSP Version 1.
         /// </summary>
@@ -137,9 +137,9 @@ namespace Threax.AspNetCore.CSP
             return item;
         }
 
-        /// <summary>
-        /// Set ReportTo, since it isn't widely supported yet also adds ReportUri. If null nothing is sent. Default: null.
-        /// </summary>
+        // <summary>
+        // Set ReportTo, since it isn't widely supported yet also adds ReportUri. If null nothing is sent. Default: null.
+        // </summary>
         //public String ReportTo { get; set; } = null;
 
         /// <summary>
