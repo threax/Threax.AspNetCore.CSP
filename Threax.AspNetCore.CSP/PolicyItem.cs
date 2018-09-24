@@ -64,7 +64,10 @@ namespace Threax.AspNetCore.CSP
         /// </summary>
         public PolicyItem AddEntries(IEnumerable<String> value)
         {
-            this.Entries.AddRange(value);
+            if (value != null)
+            {
+                this.Entries.AddRange(value);
+            }
             return this;
         }
 
