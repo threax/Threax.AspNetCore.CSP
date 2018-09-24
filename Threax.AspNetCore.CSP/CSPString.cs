@@ -9,9 +9,9 @@ namespace Threax.AspNetCore.CSP
     /// </summary>
     public class CSPString
     {
-        public CSPString(String value)
+        public CSPString(CSPOptions options)
         {
-            this.Value = value;
+            this.Value = options.ToString();
         }
 
         public String Value { get; private set; }

@@ -11,6 +11,17 @@ namespace Threax.AspNetCore.CSP
     {
         public Dictionary<String, PolicyItem> Policies { get; set; } = new Dictionary<string, PolicyItem>();
 
+        private PolicyItem GetOrCreatePolicy(String name)
+        {
+            PolicyItem policy;
+            if(!Policies.TryGetValue(name, out policy))
+            {
+                policy = new PolicyItem();
+                Policies.Add(name, policy);
+            }
+            return policy;
+        }
+
         /// <summary>
         /// The HTTP Content-Security-Policy (CSP) default-src directive serves as a fallback for the other CSP fetch directives. 
         /// For each of the following directives that are absent, the user agent will look for the default-src directive and will use this value for it.
@@ -19,9 +30,7 @@ namespace Threax.AspNetCore.CSP
         /// </summary>
         public PolicyItem AddDefault()
         {
-            var item = new PolicyItem();
-            Policies.Add("default-src", item);
-            return item;
+            return GetOrCreatePolicy("default-src");
         }
 
         /// <summary>
@@ -30,9 +39,7 @@ namespace Threax.AspNetCore.CSP
         /// </summary>
         public PolicyItem AddConnect()
         {
-            var item = new PolicyItem();
-            Policies.Add("connect-src", item);
-            return item;
+            return GetOrCreatePolicy("connect-src");
         }
 
         /// <summary>
@@ -41,9 +48,7 @@ namespace Threax.AspNetCore.CSP
         /// </summary>
         public PolicyItem AddFont()
         {
-            var item = new PolicyItem();
-            Policies.Add("font-src", item);
-            return item;
+            return GetOrCreatePolicy("font-src");
         }
 
         /// <summary>
@@ -52,9 +57,7 @@ namespace Threax.AspNetCore.CSP
         /// </summary>
         public PolicyItem AddFrame()
         {
-            var item = new PolicyItem();
-            Policies.Add("frame-src", item);
-            return item;
+            return GetOrCreatePolicy("frame-src");
         }
 
         /// <summary>
@@ -63,9 +66,7 @@ namespace Threax.AspNetCore.CSP
         /// </summary>
         public PolicyItem AddImg()
         {
-            var item = new PolicyItem();
-            Policies.Add("img-src", item);
-            return item;
+            return GetOrCreatePolicy("img-src");
         }
 
         /// <summary>
@@ -74,9 +75,7 @@ namespace Threax.AspNetCore.CSP
         /// </summary>
         public PolicyItem AddManifest()
         {
-            var item = new PolicyItem();
-            Policies.Add("manifest-src", item);
-            return item;
+            return GetOrCreatePolicy("manifest-src");
         }
 
         /// <summary>
@@ -85,9 +84,7 @@ namespace Threax.AspNetCore.CSP
         /// </summary>
         public PolicyItem AddMedia()
         {
-            var item = new PolicyItem();
-            Policies.Add("media-src", item);
-            return item;
+            return GetOrCreatePolicy("media-src");
         }
 
         /// <summary>
@@ -97,9 +94,7 @@ namespace Threax.AspNetCore.CSP
         /// </summary>
         public PolicyItem AddObject()
         {
-            var item = new PolicyItem();
-            Policies.Add("object-src", item);
-            return item;
+            return GetOrCreatePolicy("object-src");
         }
 
         /// <summary>
@@ -110,9 +105,7 @@ namespace Threax.AspNetCore.CSP
         /// </summary>
         public PolicyItem AddScript()
         {
-            var item = new PolicyItem();
-            Policies.Add("script-src", item);
-            return item;
+            return GetOrCreatePolicy("script-src");
         }
 
         /// <summary>
@@ -121,9 +114,7 @@ namespace Threax.AspNetCore.CSP
         /// </summary>
         public PolicyItem AddStyle()
         {
-            var item = new PolicyItem();
-            Policies.Add("style-src", item);
-            return item;
+            return GetOrCreatePolicy("style-src");
         }
 
         /// <summary>
@@ -132,9 +123,16 @@ namespace Threax.AspNetCore.CSP
         /// </summary>
         public PolicyItem AddWorker()
         {
-            var item = new PolicyItem();
-            Policies.Add("worker-src", item);
-            return item;
+            return GetOrCreatePolicy("worker-src");
+        }
+
+        /// <summary>
+        /// The HTTP Content-Security-Policy (CSP) frame-ancestors directive specifies valid parents that may embed a page using frame, iframe, object, embed, or applet.
+        /// </summary>
+        /// <returns></returns>
+        public PolicyItem AddFrameAncestors()
+        {
+            return GetOrCreatePolicy("frame-ancestors");
         }
 
         // <summary>
@@ -142,11 +140,7 @@ namespace Threax.AspNetCore.CSP
         // </summary>
         //public String ReportTo { get; set; } = null;
 
-        /// <summary>
-        /// Create the final CSP String to send to the client.
-        /// </summary>
-        /// <returns></returns>
-        public CSPString Build()
+        public override String ToString()
         {
             var sb = new StringBuilder();
 
@@ -161,7 +155,7 @@ namespace Threax.AspNetCore.CSP
                 }
             }
 
-            return new CSPString(sb.ToString(0, sb.Length > 0 ? sb.Length - 2 : 0));
+            return sb.ToString(0, sb.Length > 0 ? sb.Length - 2 : 0);
         }
     }
 }

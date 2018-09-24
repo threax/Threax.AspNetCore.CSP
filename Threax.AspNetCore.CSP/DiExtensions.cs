@@ -19,7 +19,7 @@ namespace Microsoft.Extensions.DependencyInjection.Extensions
             var options = new CSPOptions();
             configure?.Invoke(options);
 
-            services.AddSingleton<CSPString>(options.Build());
+            services.AddSingleton<CSPString>(new CSPString(options));
 
             return services;
         }
