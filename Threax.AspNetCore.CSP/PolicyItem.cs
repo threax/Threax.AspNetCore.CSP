@@ -53,6 +53,16 @@ namespace Threax.AspNetCore.CSP
         }
 
         /// <summary>
+        /// Add data:. This allows the data protocol.
+        /// </summary>
+        /// <returns></returns>
+        public PolicyItem AddData()
+        {
+            this.Entries.Add("data:");
+            return this;
+        }
+
+        /// <summary>
         /// Any additional entries you want to include, this can be any supported
         /// value.
         /// </summary>
