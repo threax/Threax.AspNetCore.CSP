@@ -31,3 +31,6 @@ Add `@addTagHelper *, Threax.AspNetCore.CSP` to your view imports. That will mak
 
 ### Add Tag Helper
 On any pages, or in your shared layouts add a `<threax-csp></threax-csp>` element to your page. This tag helper doesn't render anything, but it will add the csp header to the responses when this page, or shared template is rendered.
+
+### Nonce Support
+If you add nonce support to a policy with .AddNonce() you can then use the tag helper `csp-nonce` on any elements that you want a nonce on. This will be randomly generated each request.

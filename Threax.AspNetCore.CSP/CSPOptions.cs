@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Threax.AspNetCore.CSP
@@ -11,7 +12,29 @@ namespace Threax.AspNetCore.CSP
     {
         public Dictionary<String, PolicyItem> Policies { get; set; } = new Dictionary<string, PolicyItem>();
 
-        private PolicyItem GetOrCreatePolicy(String name)
+        /// <summary>
+        /// The size of the generated nonces in bytes. Default: 32.
+        /// </summary>
+        public int NonceSizeBytes { get; set; } = 32;
+
+        /// <summary>
+        /// This will be true if any of the policy items has a nonce.
+        /// </summary>
+        internal bool HasNonce
+        {
+            get
+            {
+                return Policies.Values.Any(i => i.HasNonce);
+            }
+        }
+
+        /// <summary>
+        /// Add a named policy. You should use the policy specific functions, but if you need to create a policy
+        /// this library does not support you can do it here.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public PolicyItem GetOrCreatePolicy(String name)
         {
             PolicyItem policy;
             if(!Policies.TryGetValue(name, out policy))

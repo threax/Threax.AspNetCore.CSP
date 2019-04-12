@@ -13,6 +13,11 @@ namespace Threax.AspNetCore.CSP
         }
 
         /// <summary>
+        /// This will be true if this policy item has a nonce.
+        /// </summary>
+        internal bool HasNonce { get; set; } = false;
+
+        /// <summary>
         /// Call this to include 'self' in this policy. This will allow
         /// connections back to the site that served the content.
         /// </summary>
@@ -29,6 +34,17 @@ namespace Threax.AspNetCore.CSP
         public PolicyItem AddNone()
         {
             this.Entries.Add("'none'");
+            return this;
+        }
+
+        /// <summary>
+        /// Add 'nonce-'. A unique nonce will be generated per request.
+        /// </summary>
+        /// <returns></returns>
+        public PolicyItem AddNonce()
+        {
+            this.Entries.Add("'nonce-'");
+            this.HasNonce = true;
             return this;
         }
 

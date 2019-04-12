@@ -20,6 +20,7 @@ namespace Microsoft.Extensions.DependencyInjection.Extensions
             configure?.Invoke(options);
 
             services.AddSingleton<CSPString>(new CSPString(options));
+            services.AddScoped<INonceProvider>(s => new NonceProvider(options.NonceSizeBytes));
 
             return services;
         }

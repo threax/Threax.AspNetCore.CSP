@@ -12,8 +12,11 @@ namespace Threax.AspNetCore.CSP
         public CSPString(CSPOptions options)
         {
             this.Value = options.ToString();
+            this.HasNonce = options.HasNonce;
         }
 
         public String Value { get; private set; }
+
+        public bool HasNonce { get; private set; }
     }
 }
