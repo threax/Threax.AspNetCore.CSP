@@ -10,7 +10,7 @@
     <RepositoryUrl>https://github.com/threax/Threax.AspNetCore.CSP</RepositoryUrl>
     <Description>This library will set the CSP header when a tag helper is rendered on a razor view.</Description>
     <PackageLicenseUrl>https://raw.githubusercontent.com/threax/Threax.AspNetCore.CSP/master/LICENSE</PackageLicenseUrl>
-    <PackageReleaseNotes>Added a way to pass extra entries using params, which is cleaner for the user.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added a way to pass extra entries using params, which is cleaner for the user. Also added nonce support.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
