@@ -72,11 +72,24 @@ namespace Threax.AspNetCore.CSP
         /// Any additional entries you want to include, this can be any supported
         /// value. This will append the entries to whatever you have added so far.
         /// </summary>
-        public PolicyItem AddEntries(IEnumerable<String> value)
+        public PolicyItem AddEntries(params String[] values)
         {
-            if (value != null)
+            if (values != null)
             {
-                this.Entries.AddRange(value);
+                this.Entries.AddRange(values);
+            }
+            return this;
+        }
+
+        /// <summary>
+        /// Any additional entries you want to include, this can be any supported
+        /// value. This will append the entries to whatever you have added so far.
+        /// </summary>
+        public PolicyItem AddEntries(IEnumerable<String> values)
+        {
+            if (values != null)
+            {
+                this.Entries.AddRange(values);
             }
             return this;
         }
