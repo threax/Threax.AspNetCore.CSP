@@ -10,15 +10,13 @@ namespace Threax.AspNetCore.CSP
 {
     public class ThreaxCSPTagHelper : TagHelper
     {
-        private CSPString cspString;
-        private IHttpContextAccessor contextAccessor;
-        private INonceProvider nonceProvider;
+        private readonly CSPOptions options;
+        private readonly ICspHeaderWriter cspHeaderWriter;
 
-        public ThreaxCSPTagHelper(CSPString options, IHttpContextAccessor contextAccessor, INonceProvider nonceProvider)
+        public ThreaxCSPTagHelper(CSPOptions options, ICspHeaderWriter cspHeaderWriter)
         {
-            this.cspString = options;
-            this.contextAccessor = contextAccessor;
-            this.nonceProvider = nonceProvider;
+            this.options = options;
+            this.cspHeaderWriter = cspHeaderWriter;
         }
 
         [HtmlAttributeNotBound]
@@ -27,12 +25,7 @@ namespace Threax.AspNetCore.CSP
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            var csp = cspString.Value;
-            if (cspString.HasNonce)
-            {
-                csp = csp.Replace("'nonce-'", $"'nonce-{nonceProvider.GetNonce()}'");
-            }
-            contextAccessor.HttpContext.Response.Headers.Add("Content-Security-Policy", csp);
+            cspHeaderWriter.AddContentSecurityPolicy(options);
             output.SuppressOutput();
         }
     }

@@ -19,7 +19,8 @@ namespace Microsoft.Extensions.DependencyInjection.Extensions
             var options = new CSPOptions();
             configure?.Invoke(options);
 
-            services.AddSingleton<CSPString>(new CSPString(options));
+            services.AddSingleton<CSPOptions>(options);
+            services.AddScoped<ICspHeaderWriter, CspHeaderWriter>();
             services.AddScoped<INonceProvider>(s => new NonceProvider(options.NonceSizeBytes));
 
             return services;
